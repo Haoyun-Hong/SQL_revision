@@ -22,3 +22,12 @@ ON r.id = s.region_id
 JOIN accounts AS a
 ON a.sales_rep_id = s.id
 ORDER BY a.name
+
+SELECT a.name account_name, s.name sales_rep_name, r.name region_name
+FROM accounts a
+LEFT JOIN sales_reps s
+ON a.sales_rep_id = s.id
+LEFT JOIN region r 
+ON r.id = s.region_id 
+WHERE r.name = 'Midwest' AND s.name LIKE '% K%'
+ORDER BY a.name
