@@ -44,5 +44,33 @@ ORDER BY occur_num DESC
 /*
 DISINCT: used in SELECT statements, can only use once 
 kind of tricky
+HAVING: WHERE clause does not allow you to filter aggregate columns 
+this is where you use HAVING
+You can add conditions on the having clause but 
+it must be in the group by statement or an aggregate function
+You can also use a WHERE clause but it cannot show up in the SELECT statement (not aggregation)
 */
+
+SELECT a.id, a.name, COUNT(*)
+FROM accounts a
+LEFT JOIN web_events w
+ON w.account_id = a.id 
+GROUP BY a.id, a.name, w.channel
+HAVING COUNT(*) > 6 AND w.channel = 'facebook'
+
+/*
+DATE FUNCTION
+DATE_TRUNC("day", 2017-04-01 12:51:01) output: 2017-04-01
+DATE_PART("month", 2017-04-01 12:51:01) output: 4
+DATE_PART("dow", 2017-04-01) gives the day of week 
+0: Sunday, 6:Saturday
+can use 1,2 referring to SELECT statement clauses
+*/
+ SELECT DATE_PART('month', occurred_at) month_occurred, COUNT(*)
+ FROM orders
+ GROUP BY 1
+ ORDER BY 2 DESC
+
+
+
 
