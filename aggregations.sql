@@ -71,6 +71,21 @@ can use 1,2 referring to SELECT statement clauses
  GROUP BY 1
  ORDER BY 2 DESC
 
+/*
+CASE: similar to if statement in python
+*/
+
+SELECT account_id, total_amt_usd, 
+(CASE WHEN total_amt_usd >= 3000 THEN 'Large' 
+ ELSE 'Small' END ) AS order_level
+FROM orders
 
 
-
+SELECT s.name, COUNT(*), (CASE WHEN COUNT(*) > 200 THEN 'top' ELSE 'not top' END) AS top_or_not
+FROM sales_reps s
+LEFT JOIN accounts a
+ON s.id = a.sales_rep_id
+LEFT JOIN orders o
+ON o.account_id = a.id
+GROUP BY s.id, s.name # you don't need to be grouping s.id
+ORDER BY top_or_not DESC
